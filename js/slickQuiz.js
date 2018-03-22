@@ -34,6 +34,7 @@
                 preventUnanswered: false,
                 disableScore: false,
                 disableRanking: false,
+                enablePaths: true,
                 scoreAsPercentage: false,
                 perQuestionResponseMessaging: false,
                 perQuestionResponseAnswers: false,
@@ -97,6 +98,8 @@
             _quizHeader            = _element + ' .quizHeader',
             _quizScore             = _element + ' .quizScore',
             _quizLevel             = _element + ' .quizLevel',
+            _quizPath              = _element + ' .quizPath',
+            _quizPathCopy          = _element + ' .quizPathCopy'
 
             // Top Level Quiz Element Objects
             $quizStarter           = $(_quizStarter),
@@ -106,7 +109,9 @@
             $quizResultsCopy       = $(_quizResultsCopy),
             $quizHeader            = $(_quizHeader),
             $quizScore             = $(_quizScore),
-            $quizLevel             = $(_quizLevel)
+            $quizLevel             = $(_quizLevel),
+            $quizPath              = $(_quizPath),
+            $quizPathCopy          = $(_quizPathCopy)
         ;
 
 
@@ -210,12 +215,13 @@
                 $quizName.hide().html(plugin.config.nameTemplateText
                     .replace('%name', quizValues.info.name) ).fadeIn(1000, kN(key,1));
                 $quizHeader.hide().prepend($('<div class="quizDescription">' + quizValues.info.main + '</div>')).fadeIn(1000, kN(key,2));
-                $quizResultsCopy.append(quizValues.info.results);
+                // MAH: TODO: figure out how to turn back on
+                //$quizResultsCopy.append(quizValues.info.results);
 
                 // add retry button to results view, if enabled
-                if (plugin.config.tryAgainText && plugin.config.tryAgainText !== '') {
-                    $quizResultsCopy.append('<p><a class="button ' + tryAgainClass + '" href="#">' + plugin.config.tryAgainText + '</a></p>');
-                }
+                //if (plugin.config.tryAgainText && plugin.config.tryAgainText !== '') {
+                //    $quizResultsCopy.append('<p><a class="button ' + tryAgainClass + '" href="#">' + plugin.config.tryAgainText + '</a></p>');
+                //}
 
                 // Setup questions
                 var quiz  = $('<ol class="' + questionGroupClass + '"></ol>'),
@@ -285,7 +291,7 @@
                                 var input = '<input id="' + optionId + '" name="' + inputName +
                                             '" type="' + inputType + '" /> ';
 
-                                var optionLabel = '<label for="' + optionId + '">' + answer.option + '</label>';
+                                var optionLabel = '<label class="quizLabel" for="' + optionId + '">' + answer.option + '</label>';
 
                                 var answerContent = $('<li></li>')
                                     .append(input)
@@ -477,8 +483,6 @@
                 } else {
                     paths[selectedPaths] = 1;
                 }
-                console.log(paths);
-
 
                 // Verify all/any true answers (and no false ones) were submitted
                 var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers, selectAny);
@@ -629,23 +633,30 @@
                 if (plugin.config.disableRanking) {
                     $(_quizLevel).remove()
                 } else {
-                    var levels    = [
-                                        quizValues.info.level1, // 80-100%
-                                        quizValues.info.level2, // 60-79%
-                                        quizValues.info.level3, // 40-59%
-                                        quizValues.info.level4, // 20-39%
-                                        quizValues.info.level5  // 0-19%
-                                    ],
-                        levelRank = plugin.method.calculateLevel(score),
-                        levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
+                    // MAH: Enable showing the path
+                    if (plugin.config.enablePaths) {
+                        var pathTop = plugin.method.calculatePath(paths),
+                            path = quizValues.info.paths[pathTop],
+                            pathTitle = path.title,
+                            pathCopy = path.description;
+                        $(_quizPath).html(pathTitle);
+                        $(_quizPath).addClass(pathTop);
+                        $(_quizPathCopy).html(pathCopy);
+                    } else {
+                        var levels    = [
+                                            quizValues.info.level1, // 80-100%
+                                            quizValues.info.level2, // 60-79%
+                                            quizValues.info.level3, // 40-59%
+                                            quizValues.info.level4, // 20-39%
+                                            quizValues.info.level5  // 0-19%
+                                        ],
+                            levelRank = plugin.method.calculateLevel(score),
+                            levelText = $.isNumeric(levelRank) ? levels[levelRank] : '';
 
-                    $(_quizLevel + ' span').html(levelText);
-                    $(_quizLevel).addClass('level' + levelRank);
+                        $(_quizLevel + ' span').html(levelText);
+                        $(_quizLevel).addClass('level' + levelRank);
+                    }
                 }
-
-                // MAH: Calculate top path
-                var path = plugin.method.calculatePath(paths);
-                console.log(path);
 
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it now
