@@ -4,69 +4,119 @@
 
 var quizJSON = {
     "info": {
-        "name":    "Test Your Knowledge!!",
-        "main":    "<p>Think you're smart enough to be on Jeopardy? Find out with this super crazy knowledge quiz!</p>",
+        "name":    "Tech Career Quiz",
+        "main":    "<p>Confused about which tech career path to pursue? Find out which might be a good fit with this quiz!</p>",
         "results": "<h5>Learn More</h5><p>Etiam scelerisque, nunc ac egestas consequat, odio nibh euismod nulla, eget auctor orci nibh vel nisi. Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed sit amet purus.</p>",
-        "level1":  "Jeopardy Ready",
-        "level2":  "Jeopardy Contender",
-        "level3":  "Jeopardy Amateur",
-        "level4":  "Jeopardy Newb",
-        "level5":  "Stay in school, kid..." // no comma here
+        "level1":  "Front End Developer",
+        "level2":  "Back End Developer",
+        "level3":  "Data Scientist",
+        "level4":  "UX Designer",
+        "level5":  "Project Manager"
     },
     "questions": [
-        { // Question 1 - Multiple Choice, Single True Answer
-            "q": "What number is the letter A in the English alphabet?",
+        { // Question 1
+            "q": "I have been professionally working for:",
             "a": [
-                {"option": "8",      "correct": false},
-                {"option": "14",     "correct": false},
-                {"option": "1",      "correct": true},
-                {"option": "23",     "correct": false} // no comma here
+                {"option": "0-5 years",      "correct": true, "path": "front-end"},
+                {"option": "5-10 years",     "correct": true, "path": "ux"},
+                {"option": "10+ years",      "correct": true, "path": "ux"}
             ],
-            "correct": "<p><span>That's right!</span> The letter A is the first letter in the alphabet!</p>",
-            "incorrect": "<p><span>Uhh no.</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>" // no comma here
+            "correct!": "<p><span>Awesome!</p>",
+            "incorrect": "<p><span>Awesome!</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>" // no comma here
         },
-        { // Question 2 - Multiple Choice, Multiple True Answers, Select Any
-            "q": "Which of the following best represents your preferred breakfast?",
+        { // Question 2
+            "q": "My prior experience (school or work), has provided me with the following level of technology skills:",
             "a": [
-                {"option": "Bacon and eggs",               "correct": false},
-                {"option": "Fruit, oatmeal, and yogurt",   "correct": true},
-                {"option": "Leftover pizza",               "correct": false},
-                {"option": "Eggs, fruit, toast, and milk", "correct": true} // no comma here
+                {"option": "None",   "correct": true, "path": "project-manager"},
+                {"option": "Basic",    "correct": true, "path": "ux"},
+                {"option": "Intermediate",     "correct": true, "path": "front-end"},
+                {"option": "Advanced",      "correct": true, "path": "back-end"}
             ],
-            "select_any": true,
-            "correct": "<p><span>Nice!</span> Your cholestoral level is probably doing alright.</p>",
-            "incorrect": "<p><span>Hmmm.</span> You might want to reconsider your options.</p>" // no comma here
+            "correct": "<p><span>Holy bananas!</span></p>",
+            "incorrect": "<p><span>Holy bananas!</span></p>" // no comma here
         },
-        { // Question 3 - Multiple Choice, Multiple True Answers, Select All
-            "q": "Where are you right now? Select ALL that apply.",
+        { // Question 3
+            "q": "In my job I’m most interested in ______.",
             "a": [
-                {"option": "Planet Earth",           "correct": true},
-                {"option": "Pluto",                  "correct": false},
-                {"option": "At a computing device",  "correct": true},
-                {"option": "The Milky Way",          "correct": true} // no comma here
-            ],
-            "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
-            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>" // no comma here
+                {"option": "Finding fresh solutions to hard problems",        "correct": true, "path": "back-end"},
+                {"option": "Building something new from scratch",           "correct": true, "path": "front-end"},
+                {"option": "Using facts, figures and logic to get things done",  "correct": true, "path": "data"},
+                {"option": "People! I am all about trying to understand the needs of users",   "correct": true, "path": "ux"},
+                {"option": "Getting the project done efficiently, and on time!",   "correct": true, "path": "project-manager"}
+        ],
+            "correct": "<p><span>Nice!</span></p>",
+            "incorrect": "<p><span>Nice!</span></p>" // no comma here
         },
         { // Question 4
-            "q": "How many inches of rain does Michigan get on average per year?",
+            "q": "If you know it, tell us your Myers Brigg. Myers Brigg is just one way of describing personality, but we think it’s a fun way! Don’t forget, your Myers Brigg can change over the course of your life based on experiences. Neuroplasticity! You can take the test at 16 personalities: https://www.16personalities.com/personality-types",
             "a": [
-                {"option": "149",    "correct": false},
-                {"option": "32",     "correct": true},
-                {"option": "3",      "correct": false},
-                {"option": "1291",   "correct": false} // no comma here
+                {"option": "INTJ, INFP, ENFP",    "correct": true, "path": "ux"},
+                {"option": "ENTP, INFJ, ISTJ, ISTP",     "correct": true, "path": "ux"},
+                {"option": "INTP, ESTP",     "correct": true, "path": "ux"},
+                {"option": "INFP, ISFP, ESFP",     "correct": true, "path": "ux"},
+                {"option": "ENTJ, ENFJ, ISFJ, ESFJ",     "correct": true, "path": "ux"}
             ],
-            "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
-            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
+            "correct": "<p><span>Cool!</span></p>",
+            "incorrect": "<p><span>Cool!</span></p>" // no comma here
         },
         { // Question 5
-            "q": "Is Earth bigger than a basketball?",
+            "q": "My ideal work environment is:",
             "a": [
-                {"option": "Yes",    "correct": true},
-                {"option": "No",     "correct": false} // no comma here
+                {"option": "Working collaboratively on a team in an office",   "correct": true, "path": "ux"},
+                {"option": "Working alone or remotely from home",          "correct": true, "path": "ux"},
+                {"option": "Having the flexibility to work remotely or in a team",  "correct": true, "path": "ux"}
             ],
-            "correct": "<p><span>Good Job!</span> You must be very observant!</p>",
-            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>" // no comma here
-        } // no comma here
+            "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
+            "incorrect": "<p><span>Brilliant!</p>" // no comma here
+        },
+        { // Question 6
+            "q": "I find loud work environments:",
+            "a": [
+                {"option": "Exciting and motivating",   "correct": true, "path": "ux"},
+                {"option": "Distracting and draining",          "correct": true, "path": "ux"},
+                {"option": "It depends on what I am working on",  "correct": true, "path": "ux"}
+            ],
+            "correct": "<p><span>Awesome!</span></p>",
+            "incorrect": "<p><span>Awesome!</p>"
+        },
+        { // Question 7
+            "q": "I would prefer to work for:",
+            "a": [
+                {"option": "A well established corporation",   "correct": true, "path": "ux"},
+                {"option": "A startup",          "correct": true, "path": "ux"},
+                {"option": "A non-profit or educational organization",  "correct": true, "path": "ux"}
+            ],
+            "correct": "<p><span>Alrighty!</span></p>",
+            "incorrect": "<p><span>Alrighty!</span></p>"
+        },
+        { // Question 8
+            "q": "I like to learn new information and how to complete a task:",
+            "a": [
+                {"option": "By diving in and working hands on",   "correct": true, "path": "back-end"},
+                {"option": "By having someone tell or show me",          "correct": true, "path": "ux"},
+                {"option": "By reading instructions and looking at graphics",  "correct": true, "path": "data"}
+            ],
+            "correct": "<p><span>Nice!</span></p>",
+                "incorrect": "<p><span>Nice!</span></p>"
+          },
+        { // Question 9
+            "q": " I work best when my supervisor:",
+            "a": [
+                {"option": "Provides me with constant direction",   "correct": true, "path": "ux"},
+                {"option": "Does not give me constant direction but checks ins from time to time",          "correct": true, "path": "ux"},
+                {"option": "Gives me full autonomy over a task",  "correct": true, "path": "ux"}
+            ],
+            "correct": "<p><span>Brilliant!</span></p>",
+                "incorrect": "<p><span>Brilliant!</span></p>"},
+        { // Question 10
+            "q": "When I am given a new task or a problem to solve:",
+            "a": [
+                {"option": "I like to draw diagrams and use sketches to find a solution",   "correct": true, "path": "ux"},
+                {"option": "I like to fidget with the content or object to find a solution",          "correct": true, "path": "front-end"},
+                {"option": "I like to talk and rationalize my processes out loud to find a solution",  "correct": true, "path": "ux"}
+            ],
+            "correct": "<p><span>Wonderful!</span></p>",
+            "incorrect": "<p><span>Wonderful!</span></p>" // no comma here
+        } //
     ]
 };

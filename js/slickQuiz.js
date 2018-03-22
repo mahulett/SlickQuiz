@@ -17,7 +17,7 @@
             _element = '#' + $element.attr('id'),
 
             defaults = {
-                checkAnswerText:  'Check My Answer!',
+                checkAnswerText:  'Submit!',
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 completeQuizText: '',
@@ -35,7 +35,7 @@
                 disableScore: false,
                 disableRanking: false,
                 scoreAsPercentage: false,
-                perQuestionResponseMessaging: true,
+                perQuestionResponseMessaging: false,
                 perQuestionResponseAnswers: false,
                 completionResponseMessaging: false,
                 displayQuestionCount: true,   // Deprecate?
@@ -162,6 +162,9 @@
         // Count the number of questions
         var questionCount = questions.length;
 
+        // MAH: Create objects for paths
+        var paths = {};
+
         // Select X number of questions to load if options is set
         if (plugin.config.numberOfQuestions && questionCount >= plugin.config.numberOfQuestions) {
             questions = questions.slice(0, plugin.config.numberOfQuestions);
@@ -260,6 +263,7 @@
                         var answers = plugin.config.randomSortAnswers ?
                             question.a.sort(function() { return (Math.round(Math.random())-0.5); }) :
                             question.a;
+
 
                         // prepare a name for the answer inputs based on the question
                         var selectAny     = question.select_any ? question.select_any : false,
@@ -460,6 +464,22 @@
                     return false;
                 }
 
+                // MAH: Collect the paths submitted
+                var selectedPaths = [];
+                for (i in selectedAnswers) {
+                    var pathId = selectedAnswers[i];
+                    selectedPaths.push(answers[pathId].path);
+                }
+
+                // MAH: Tally paths
+                if (paths.hasOwnProperty(selectedPaths)) {
+                    paths[selectedPaths] += 1;
+                } else {
+                    paths[selectedPaths] = 1;
+                }
+                console.log(paths);
+
+
                 // Verify all/any true answers (and no false ones) were submitted
                 var correctResponse = plugin.method.compareAnswers(trueAnswers, selectedAnswers, selectAny);
 
@@ -623,6 +643,10 @@
                     $(_quizLevel).addClass('level' + levelRank);
                 }
 
+                // MAH: Calculate top path
+                var path = plugin.method.calculatePath(paths);
+                console.log(path);
+
                 $quizArea.fadeOut(300, function() {
                     // If response messaging is set to show upon quiz completion, show it now
                     if (plugin.config.completionResponseMessaging) {
@@ -653,6 +677,10 @@
                     // crafty array comparison (http://stackoverflow.com/a/7726509)
                     return ($(trueAnswers).not(selectedAnswers).length === 0 && $(selectedAnswers).not(trueAnswers).length === 0);
                 }
+            },
+
+            calculatePath: function(paths) {
+                return Object.keys(paths).reduce((a, b) => paths[a] > paths[b] ? a : b);
             },
 
             // Calculates knowledge level based on number of correct answers
